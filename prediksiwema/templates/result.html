@@ -1,0 +1,187 @@
+<!-- result.html -->
+
+{% extends 'base.html' %} {% block content %}
+
+<style>
+  .container {
+    margin: 2% auto;
+    max-width: 95%;
+    background-color: #d5d7da;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .header h2 {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .result {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #050505;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    justify-content: space-between;
+  }
+
+  .result img {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+  }
+
+  .result-details {
+    flex-grow: 1;
+    height: 200px;
+    overflow: hidden;
+  }
+
+  .result h3 {
+    font-size: 14px;
+    margin-bottom: 5px;
+    line-height: 1.2;
+  }
+
+  .result p {
+    font-size: 13px;
+    margin-bottom: 3px;
+    line-height: 1.2;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #070d13;
+  }
+
+  #chart {
+    margin-top: 20px;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="header text-center">
+        <h2>Hasil Perhitungan WEMA</h2>
+        <p>Periode (Span): {{ span }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menampilkan hasil perhitungan WEMA -->
+  {% load static %}
+  <div class="row">
+    {% for result in results %} {% if forloop.counter <= 3 %} <div class="col-md-4">
+      <div class="result">
+        <div class="result-details">
+          <div class="image-container text-center">
+            <img src="../media/img/{{ result.komoditas }}.png" alt="{{ result.komoditas }}" />
+          </div>
+          <h3>
+            WEMA untuk {{ result.komoditas }}: {{ result.wema_average }}
+          </h3>
+          <p>MAPE untuk {{ result.komoditas }}: {{ result.mape }}</p>
+          <p>actual_values: {{ result.actual_values }}</p>
+          <p>MAPE dalam persen: {{ result.mape_percentage }}%</p>
+        </div>
+      </div>
+  </div>
+  {% else %} {% if forloop.counter == 4 %}
+</div>
+<div class="row">
+  {% endif %}
+  <div class="col-md-4">
+    <div class="result">
+      <div class="result-details">
+        <div class="image-container text-center">
+          <img src="../media/img/{{ result.komoditas }}.png" alt="{{ result.komoditas }}" />
+        </div>
+        <h3>
+          WEMA untuk {{ result.komoditas }}:{{ result.wema_average }}
+        </h3>
+        <p>MAPE untuk {{ result.komoditas }}: {{ result.mape }}</p>
+        <p>actual_values: {{ result.actual_values }}</p>
+        <p>MAPE dalam persen: {{ result.mape_percentage }}%</p>
+      </div>
+    </div>
+  </div>
+  {% endif %} {% endfor %}
+</div>
+
+<div class="col-md-12 text-center">
+  <a href="{% url 'input' %}" class="btn btn-primary">Kembali</a>
+  <a href="{% url 'grafik' %}" class="btn btn-primary">Lihat Grafik</a>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div id="chart"></div>
+  </div>
+</div>
+<div id="chart-div"></div>
+</div>
+
+{% load static %}
+<script src="{% static 'js/plotly.min.js' %}"></script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<script>
+  var results = JSON.parse("{{ results|escapejs }}");
+  var data = [];
+
+  for (var i = 0; i < results.length; i++) {
+    var result = results[i];
+    var actualValues = JSON.parse(result.actual_values);
+    var mapeValue = result.mape;
+
+    data.push({
+      x: Array.from({ length: actualValues.length }, (_, index) => index),
+      y: Array(actualValues.length).fill(mapeValue),
+      mode: "lines+markers",
+      name: result.komoditas,
+      hovertemplate: "MAPE: %{y}%<extra></extra>"
+    });
+  }
+
+  var layout = {
+    title: "Grafik MAPE",
+    xaxis: {
+      title: "Indeks",
+      showgrid: true,
+      zeroline: false
+    },
+    yaxis: {
+      title: "MAPE (%)",
+      showgrid: true,
+      zeroline: false
+    }
+  };
+
+  Plotly.newPlot("chart", data, layout);
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,52 @@
+body {
+  background-color: white;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: 50% 50%;
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  max-width: 400px;
+  max-height: 350px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #d5d7da;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.drop-zone {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  text-align: center;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  max-height: 180px;
+  font-size: 15px;
+  margin-top: 10px;
+}     
+
+.drop-zone:hover {
+  border-color: #aaa;
+}
+
+.drop-zone #fileName {
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.submit-button {
+  padding: 8px 8px;
+  margin-left: 5px;
+  width: auto;
+  height: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}

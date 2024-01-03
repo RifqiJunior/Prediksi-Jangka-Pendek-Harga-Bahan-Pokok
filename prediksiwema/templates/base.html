@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediksi WEMA</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: rgb(237, 236, 237);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: 50% 50%;
+        }
+
+        .sidebar {
+            background-color: #f8f9fa;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .sticky-navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .sticky-navbar.show-navbar {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .navbar-nav {
+            text-align: center;
+        }
+
+        .navbar-collapse {
+            justify-content: flex-end;
+        }
+
+        .navbar-toggler {
+            border: none;
+            background: transparent;
+            outline: none;
+        }
+
+
+        li {
+            cursor: pointer;
+            background-color: rgb(85, 85, 173);
+            color: white;
+            height: auto;
+        }
+
+        li:hover {
+            background-color: mediumaquamarine;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-navbar" style="background-color: rgb(85, 85, 173);">
+        <a class="navbar-brand text-white" href="{% url 'input' %}" style="padding-left: 20px;">Prediksi WEMA</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav" style="margin-left: auto; padding-right: 30px;">
+                <li class="nav-item active">
+                    <a class="nav-link text-white" href="{% url 'input' %}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'input' %}#input">Input Dataset</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'calculate_wema' %}">Hasil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'grafik' %}">Grafik</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js">
+        document.getElementById("learnmore").addEventListener("click", function () {
+            window.scrollTo(0, document.getElementById("about").offsetTop);
+        });
+    </script>
+    </script>
+</body>
+
+</html>

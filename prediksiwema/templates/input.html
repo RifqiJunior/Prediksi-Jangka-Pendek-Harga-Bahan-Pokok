@@ -1,0 +1,380 @@
+<!-- input.html -->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Prediksi WEMA</title>
+    <link rel="stylesheet" type="text/css" href="{% static '../css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: rgb(237, 236, 237);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: 50% 50%;
+        }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content {
+            max-width: 400px;
+            max-height: 350px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgb(237, 236, 237);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .content-atas {
+            max-width: 900px;
+            max-height: 150px;
+            margin: auto;
+            padding: 20px;
+            background-color: rgb(214, 212, 214);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5%;
+            border: 1px solid black;
+            margin-top: 20px;
+        }
+
+        .drop-zone {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            max-height: 180px;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+
+        .drop-zone:hover {
+            border-color: #aaa;
+        }
+
+        .drop-zone #fileName {
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .submit-button {
+            padding: 8px 8px;
+            margin-left: 5px;
+            width: auto;
+            height: auto;
+            color: white;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+            background-color: rgb(85, 85, 173);
+        }
+
+        .submit-button:hover {
+            background-color: mediumaquamarine;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .gambar-kiri {
+            float: left;
+            width: 420px;
+            margin-right: 50px;
+            margin-top: 0px;
+            margin-left: 60px;
+        }
+
+        h2 {
+            font-size: 24px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 24px;
+            margin-top: 2px;
+            text-align: center;
+        }
+
+        #dashboard p {
+            margin-right: 40px;
+            text-align: justify;
+            font-size: 15px;
+            margin-top: 40px;
+            line-height: 1.5;
+            font-family: 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans';
+        }
+
+        .sticky-navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .sticky-navbar.show-navbar {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .navbar-nav {
+            text-align: center;
+        }
+
+        .navbar-collapse {
+            justify-content: flex-end;
+        }
+
+        .navbar-toggler {
+            border: none;
+            background: transparent;
+            outline: none;
+        }
+
+        li {
+            cursor: pointer;
+            background-color: rgb(85, 85, 173);
+            color: white;
+            height: auto;
+        }
+
+        li:hover {
+            background-color: mediumaquamarine;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        td {
+            text-align: left;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        #learnmore {
+            margin-top: 20px;
+            cursor: pointer;
+            background-color: rgb(85, 85, 173);
+            border-radius: 8%;
+            padding: 8px 8px;
+            width: auto;
+            color: white;
+            height: auto;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+        }
+
+        #learnmore:hover {
+            background-color: mediumaquamarine;
+        }
+
+        @media screen and (min-width: 1024px) {}
+
+        @media screen and (min-width: 767px) and (max-width:1023px) {}
+
+        @media screen and (min-width:767px) {}
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-navbar" style="background-color: rgb(85, 85, 173);">
+        <a class="navbar-brand text-white" href="{% url 'input' %}" style="padding-left: 20px;">Prediksi WEMA</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav" style="margin-left: auto; padding-right: 30px;">
+                <li class="nav-item active">
+                    <a class="nav-link text-white" href="{% url 'input' %}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#input">Input Dataset</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'calculate_wema' %}">Hasil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'grafik' %}">Grafik</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="content-atas">
+        <h2>Prediksi Jangka Pendek Harga Bahan Pokok DKI Jakarta </h2>
+        <h3>Menggunakan Metode Weigted Exponential Moving Average</h3>
+    </div>
+    <section id="dashboard" style="margin-bottom: 500px; max-height: 10vh;">
+        <div class="image">
+            <img src="../media/img/komoditas.png" alt="Image" class="gambar-kiri">
+        </div>
+        <div class=" ">
+            <p>"Selamat datang di website Prediksi Jangka Pendek Harga Bahan Pokok DKI Jakarta! Di sini, dapat melakukan
+                prediksi harga bahan pokok secara jangka pendek menggunakan metode Weighted Exponential Moving Average
+                (WEMA).
+            </p>
+            <p style="margin-top: 20px;">Masukkan dataset harga bahan pokok yang sesuai dengan format yang ditentukan.
+                Juga dapat mengatur periode dengan menentukan parameter span untuk analisis WEMA</p>
+        </div>
+        <p style="margin-top: 20px;">berikut adalah contoh format yang sesuai:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Komoditas</th>
+                    <th>01/01/2022</th>
+                    <th>02/01/2022</th>
+                    <th>03/01/2022</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align: center;">1</td>
+                    <td>Daging Ayam</td>
+                    <td>40100</td>
+                    <td>40100</td>
+                    <td>40600</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">2</td>
+                    <td>Daging Sapi</td>
+                    <td>128350</td>
+                    <td>128350</td>
+                    <td>128350</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">3</td>
+                    <td>Telur Ayam</td>
+                    <td>23000</td>
+                    <td>23000</td>
+                    <td>30000</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">4</td>
+                    <td>Minyak Goreng</td>
+                    <td>20700</td>
+                    <td>20700</td>
+                    <td>20650</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">5</td>
+                    <td>Gula Pasir</td>
+                    <td>14750</td>
+                    <td>14750</td>
+                    <td>14350</td>
+                </tr>
+            </tbody>
+        </table>
+        <button id="learnmore" style="margin-top: 20px; ">Prediksi Sekarang</button>
+    </section>
+
+    <section id="input"
+        style="background-image: url('../media/img/back.png'); background-size: cover; background-position: 50% 50%;">
+        <div class="container">
+            <div class="content">
+                <h2 style="text-align: center;">PREDIKSI WEMA</h2>
+
+                {% if error_message %}
+                <div id="errorAlert" class="alert alert-danger" role="alert" style="display: block;">
+                    {{ error_message }}
+                </div>
+                {% endif %}
+
+                <form method="POST" enctype="multipart/form-data" action="{% url 'calculate_wema' %}">
+                    {% csrf_token %}
+                    <div class="drop-zone" id="dropZone">
+                        <input type="file" id="datasetFile" name="datasetFile" accept=".xlsx" required
+                            style="margin-top: 30px; margin-left: 25px;">
+                        <p id="fileName" style="font-size: 15px;">Masukkan Data Komoditas Bahan Pokok</p>
+                    </div>
+                    <P></P>
+                    <label for="span" style="font-size: 15px;">Span:</label>
+                    <input type="text" id="span" name="span" placeholder=" Masukkan span" required>
+                    <button type="submit" class="submit-button">Hitung WEMA</button>
+                </form>
+            </div>
+    </section>
+    </div>
+
+
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/plotly.min.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script>
+        document.getElementById("learnmore").addEventListener("click", function () {
+            document.getElementById("input").scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+        });
+
+        //navbar
+        var navbar = document.getElementById('navbar');
+        var isHovered = false;
+
+        navbar.addEventListener('mouseover', function () {
+            isHovered = true;
+            navbar.classList.add('show-navbar');
+        });
+
+        navbar.addEventListener('mouseout', function () {
+            isHovered = false;
+            setTimeout(function () {
+                if (!isHovered) {
+                    navbar.classList.remove('show-navbar');
+                }
+            }, 200); // Menunda 0,5 detik sebelum menghilangkan navbar
+        });
+
+
+        // Mendapatkan tombol submit pada form
+        var submitButton = document.querySelector('form button[type="submit"]');
+        // Memeriksa apakah pesan kesalahan ditampilkan setelah refresh halaman
+        if (window.history.replaceState && errorAlert) {
+            window.history.replaceState({}, document.title, window.location.href.split('?')[0]);
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            var errorAlert = document.getElementById("errorAlert");
+            if (errorAlert) {
+                // Tampilkan elemen alert
+                errorAlert.style.display = "block";
+                // Hilangkan pesan kesalahan setelah 5 detik
+                setTimeout(function () {
+                    errorAlert.style.display = 'none';
+                }, 3000);
+            }
+        });
+
+        // Menambahkan event listener pada saat form disubmit
+        submitButton.addEventListener('click', function (event) {
+            // Memeriksa apakah file dataset sudah diunggah
+            var datasetFileInput = document.getElementById('datasetFile');
+            if (!datasetFileInput.files || !datasetFileInput.files[0]) {
+                event.preventDefault(); // Mencegah form untuk submit tanpa mengisi dataset
+                errorAlert.style.display = 'block';
+                errorAlert.innerText = 'File dataset belum dipilih. Silakan unggah file dataset terlebih dahulu.';
+                setTimeout(function () {
+                    errorAlert.style.display = 'none';
+                }, 3000); // Menghilangkan pesan kesalahan setelah 3 detik
+            }
+        });
+    </script>
+</body>
+
+</html>
